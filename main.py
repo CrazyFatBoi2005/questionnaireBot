@@ -459,18 +459,15 @@ async def build_media(bot, id):
         if file_extension == '.pdf':
             media.attach_document(file)
             await bot.send_media_group(ADMIN, media=media)
-            await bot.send_media_group(ADMIN2, media=media)
         else:
             try:
                 media = types.MediaGroup()
                 media.attach_photo(file, p.name)
                 await bot.send_media_group(ADMIN, media=media)
-                await bot.send_media_group(ADMIN2, media=media)
             except:
                 media = types.MediaGroup()
                 media.attach_document(file)
                 await bot.send_media_group(ADMIN, media=media)
-                await bot.send_media_group(ADMIN2, media=media)
     for p in data[id]['peoples']:
         await asyncio.sleep(1)
         media = types.MediaGroup()
