@@ -1,3 +1,4 @@
+import asyncio
 import random
 import os
 from config import TOKEN
@@ -451,6 +452,7 @@ async def accepting(query: CallbackQuery, state: FSMContext):
 async def build_media(bot, id):
     global data
     for p in data[id]['peoples']:
+        await asyncio.sleep(1)
         media = types.MediaGroup()
         file = types.InputFile(p.passport)
         filename, file_extension = os.path.splitext(p.passport)
@@ -460,10 +462,12 @@ async def build_media(bot, id):
             await bot.send_media_group(ADMIN2, media=media)
         else:
             try:
+                media = types.MediaGroup()
                 media.attach_photo(file, p.name)
                 await bot.send_media_group(ADMIN, media=media)
                 await bot.send_media_group(ADMIN2, media=media)
             except:
+                media = types.MediaGroup()
                 media.attach_document(file)
                 await bot.send_media_group(ADMIN, media=media)
                 await bot.send_media_group(ADMIN2, media=media)
