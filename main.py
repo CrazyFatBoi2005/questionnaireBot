@@ -15,7 +15,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from sql_commands import *
 
 ADMIN = 508537898
-ADMIN2 = 760565355
+ADMIN2 = 5170707147
 
 last_message = {}
 
