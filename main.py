@@ -434,7 +434,7 @@ async def accepting(query: CallbackQuery, state: FSMContext):
                                parse_mode="Markdown")
         await bot.send_message(ADMIN2, moder_text(query.from_user.username) + build_message(query.from_user.id),
                                parse_mode="Markdown")
-        await build_media(bot, query.from_user.username)
+        await build_media(bot, query.from_user.id)
     elif query.data == 'restart':
         msg = last_message[query.from_user.id]
         await bot.edit_message_text(data_to_text[query.data], query.from_user.id, msg.message_id)
