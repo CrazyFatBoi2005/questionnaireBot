@@ -432,10 +432,8 @@ async def accepting(query: CallbackQuery, state: FSMContext):
         last_message[query.from_user.id] = await send_menu(query.from_user.id)
         await bot.send_message(ADMIN, moder_text(query.from_user.username) + build_message(query.from_user.id),
                                parse_mode="Markdown")
-        await bot.send_media_group(ADMIN, media=build_media(query.from_user.id))
         await bot.send_message(ADMIN2, moder_text(query.from_user.username) + build_message(query.from_user.id),
                                parse_mode="Markdown")
-        await bot.send_media_group(ADMIN2, media=build_media(query.from_user.id))
     elif query.data == 'restart':
         msg = last_message[query.from_user.id]
         await bot.edit_message_text(data_to_text[query.data], query.from_user.id, msg.message_id)
@@ -449,17 +447,18 @@ async def accepting(query: CallbackQuery, state: FSMContext):
                                    parse_mode="Markdown")
 
 
-def build_media(id):
+async def build_media(bot, id):
     global data
-    media = types.MediaGroup()
     for p in data[id]['peoples']:
+        media = types.MediaGroup()
         file = types.InputFile(p.passport)
         filename, file_extension = os.path.splitext(p.passport)
         if file_extension == '.pdf':
             media.attach_document(file, p.name)
         else:
             media.attach_photo(file, p.name)
-    return media
+        await bot.send_media_group(ADMIN, media=media)
+        await bot.send_media_group(ADMIN2, media=media)
 
 
 def build_message(id):
