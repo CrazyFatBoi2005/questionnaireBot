@@ -455,7 +455,7 @@ def build_media(id):
     for p in data[id]['peoples']:
         file = types.InputFile(p.passport)
         filename, file_extension = os.path.splitext(p.passport)
-        if file_extension == 'pdf':
+        if file_extension == '.pdf':
             media.attach_document(file, p.name)
         else:
             media.attach_photo(file, p.name)
