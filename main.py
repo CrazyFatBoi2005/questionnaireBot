@@ -456,10 +456,17 @@ async def build_media(bot, id):
         filename, file_extension = os.path.splitext(p.passport)
         if file_extension == '.pdf':
             media.attach_document(file, p.name)
+            await bot.send_media_group(ADMIN, media=media)
+            await bot.send_media_group(ADMIN2, media=media)
         else:
-            media.attach_photo(file, p.name)
-        await bot.send_media_group(ADMIN, media=media)
-        await bot.send_media_group(ADMIN2, media=media)
+            try:
+                media.attach_photo(file, p.name)
+                await bot.send_media_group(ADMIN, media=media)
+                await bot.send_media_group(ADMIN2, media=media)
+            except:
+                media.attach_document(file, p.name)
+                await bot.send_media_group(ADMIN, media=media)
+                await bot.send_media_group(ADMIN2, media=media)
 
 
 def build_message(id):
