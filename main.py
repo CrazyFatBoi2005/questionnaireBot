@@ -455,7 +455,7 @@ async def build_media(bot, id):
         file = types.InputFile(p.passport)
         filename, file_extension = os.path.splitext(p.passport)
         if file_extension == '.pdf':
-            media.attach_document(file, p.name)
+            media.attach_document(file)
             await bot.send_media_group(ADMIN, media=media)
             await bot.send_media_group(ADMIN2, media=media)
         else:
@@ -464,7 +464,7 @@ async def build_media(bot, id):
                 await bot.send_media_group(ADMIN, media=media)
                 await bot.send_media_group(ADMIN2, media=media)
             except:
-                media.attach_document(file, p.name)
+                media.attach_document(file)
                 await bot.send_media_group(ADMIN, media=media)
                 await bot.send_media_group(ADMIN2, media=media)
 
