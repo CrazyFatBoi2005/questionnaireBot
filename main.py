@@ -90,7 +90,7 @@ async def start_message(message: types.Message,  state: FSMContext):
 async def change_message(message: types.Message):
     print('Change\n', message)
     username = message.from_user.username
-    if username in agents or message.from_user.id == ADMIN:
+    if username in agents or message.from_user.username == ADMIN:
         changing_data[message.from_user.id] = {}
         await Changing.country.set()
         last_message[message.from_user.id] = await bot.send_message(message.from_user.id, f"*Выберите страну:*",
@@ -169,7 +169,7 @@ class AddUser(StatesGroup):
 async def add_user(message: types.Message):
     print(message)
     username = message.from_user.username
-    if message.from_user.id == ADMIN:
+    if message.from_user.username == ADMIN:
         await AddUser.username.set()
         await bot.send_message(message.from_user.id, f"*Введите username без знака '@':*",
                                parse_mode="Markdown")
@@ -536,7 +536,7 @@ async def menu_holder(query: CallbackQuery):
         print('no last_message')
     if query.data == "new_message":
         username = query.from_user.username
-        if username in agents or query.from_user.id == ADMIN:
+        if username in agents or query.from_user.username == ADMIN:
             await Blank.country.set()
             last_message[query.from_user.id] =\
                 await bot.send_message(query.from_user.id, f"*Выберите страну:*", reply_markup=markup_chose_country,
@@ -549,7 +549,7 @@ async def menu_holder(query: CallbackQuery):
         print('Change\n', query)
         username = query.from_user.username
         changing_data[query.from_user.id] = {}
-        if username in agents or query.from_user.id == ADMIN:
+        if username in agents or query.from_user.username == ADMIN:
             await Changing.country.set()
             last_message[query.from_user.id] = \
                 await bot.send_message(query.from_user.id, f"*Выберите страну:*", reply_markup=markup_chose_country,
